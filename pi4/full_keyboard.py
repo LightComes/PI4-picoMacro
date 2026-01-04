@@ -7,14 +7,19 @@ from gpiozero import Button
 from signal import pause
 
 #환경 변수
+global dev
 button = Button(17, bounce_time=0.1)
+if button.is_pressed:
+    keyBoardGrapFlag = True
+else:
+    keyBoardGrapFlag = False
 
 # 이벤트 핸들러 등록
 def on_press():
-    print(">>> 스위치 ON (눌러짐!)")
+    dev.grab()
 
 def on_release():
-    print(">>> 스위치 OFF (떼어짐)")
+    dev.ungrab()
 
 button.when_pressed = on_press
 button.when_released = on_release
@@ -56,6 +61,12 @@ def pick_keyboard():
 dev = pick_keyboard()
 if not dev:
     sys.exit(1)
+
+#버튼 눌림 여부에 따라 그랩 여부 확인
+if keyBoardGrapFlag:
+    dev.grab()
+else:
+    dev.ungrab()
 
 # === 3. 전체 키 매핑 (Linux Code -> HID Code) ===
 KEY_MAPPING = {
