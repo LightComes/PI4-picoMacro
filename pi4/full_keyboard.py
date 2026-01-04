@@ -8,6 +8,7 @@ from signal import pause
 
 #환경 변수
 global dev
+global keyBoardGrapFlag
 button = Button(17, bounce_time=0.1)
 if button.is_pressed:
     keyBoardGrapFlag = True
