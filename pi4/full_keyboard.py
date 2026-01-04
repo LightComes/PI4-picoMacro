@@ -17,9 +17,11 @@ else:
 # 이벤트 핸들러 등록
 def on_press():
     dev.grab()
+    keyBoardGrapFlag = True
 
 def on_release():
     dev.ungrab()
+    keyBoardGrapFlag = False
 
 button.when_pressed = on_press
 button.when_released = on_release
@@ -133,10 +135,8 @@ print("🚀 전체 키 입력 전송 시작... (종료: Ctrl+C)")
 
 # === 4. 이벤트 루프 ===
 try:
-    # dev.grab() # 필요 시 주석 해제 (RPi4 자체 입력을 막음)
-    
     for event in dev.read_loop():
-        if event.type == ecodes.EV_KEY:
+        if event.type == ecodes.EV_KEY and keyBoardGrapFlag == True:
             # 0(뗌), 1(누름) 상태만 전송 (2는 반복 입력이라 무시)
             if event.value in [0, 1]: 
                 if event.code in KEY_MAPPING:
