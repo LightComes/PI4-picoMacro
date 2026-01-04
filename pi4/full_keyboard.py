@@ -2,6 +2,23 @@ import sys
 import serial
 import evdev
 from evdev import ecodes
+# gpio 버튼
+from gpiozero import Button
+from signal import pause
+
+#환경 변수
+button = Button(17, bounce_time=0.1)
+
+# 이벤트 핸들러 등록
+button.when_pressed = on_press
+button.when_released = on_release
+
+def on_press():
+    print(">>> 스위치 ON (눌러짐!)")
+
+def on_release():
+    print(">>> 스위치 OFF (떼어짐)")
+
 
 # === 1. UART 연결 설정 ===
 try:
