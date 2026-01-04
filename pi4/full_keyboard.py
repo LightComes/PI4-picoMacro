@@ -18,10 +18,12 @@ else:
 # 이벤트 핸들러 등록
 def on_press():
     dev.grab()
+    global keyBoardGrapFlag
     keyBoardGrapFlag = True
 
 def on_release():
     dev.ungrab()
+    global keyBoardGrapFlag
     keyBoardGrapFlag = False
 
 button.when_pressed = on_press
